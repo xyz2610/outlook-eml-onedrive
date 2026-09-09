@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+  <Id>8f43e02b-e9fb-4ce6-bcf8-287dfe133d4c</Id>
+  <Version>0.1.0.0</Version>
+  <ProviderName>Internal</ProviderName>
+  <DefaultLocale>de-DE</DefaultLocale>
+  <DisplayName DefaultValue="EML Archive"/>
+  <Description DefaultValue="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
+  <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://localhost:3000/support.html"/>
+  <AppDomains>
+    <AppDomain>https://localhost:3000</AppDomain>
+    <AppDomain>https://graph.microsoft.com</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.3"/>
+    </Sets>
+  </Requirements>
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
+        <RequestedHeight>420</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+  <Permissions>ReadItem</Permissions>
+  <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
+                    xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.3">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <FunctionFile resid="Commands.Url"/>
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="emlArchive.desktopGroup">
+                <Label resid="Group.Label"/>
+                <Control xsi:type="Button" id="emlArchive.desktopButton">
+                  <Label resid="Button.Label"/>
+                  <Supertip>
+                    <Title resid="Button.Label"/>
+                    <Description resid="Button.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+        <bt:Image id="Icon.80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="Group.Label" DefaultValue="EML Archive"/>
+        <bt:String id="Button.Label" DefaultValue="Als EML speichern"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="Button.Tooltip" DefaultValue="Speichert diese Nachricht als EML in OneDrive."/>
+      </bt:LongStrings>
+    </Resources>
+
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+                      xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.5">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <DesktopFormFactor>
+            <FunctionFile resid="Commands.Url"/>
+            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="emlArchive.desktopGroupV11">
+                  <Label resid="Group.Label"/>
+                  <Control xsi:type="Button" id="emlArchive.desktopButtonV11">
+                    <Label resid="Button.Label"/>
+                    <Supertip>
+                      <Title resid="Button.Label"/>
+                      <Description resid="Button.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16"/>
+                      <bt:Image size="32" resid="Icon.32"/>
+                      <bt:Image size="80" resid="Icon.80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.Url"/>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+          </DesktopFormFactor>
+
+          <MobileFormFactor>
+            <FunctionFile resid="Commands.Url"/>
+            <ExtensionPoint xsi:type="MobileMessageReadCommandSurface">
+              <Group id="emlArchive.mobileGroup">
+                <Label resid="Group.Label"/>
+                <Control xsi:type="MobileButton" id="emlArchive.mobileButton">
+                  <Label resid="Button.Label"/>
+                  <Icon xsi:type="bt:MobileIconList">
+                    <bt:Image size="25" scale="1" resid="Icon.25"/>
+                    <bt:Image size="25" scale="2" resid="Icon.25"/>
+                    <bt:Image size="25" scale="3" resid="Icon.25"/>
+                    <bt:Image size="32" scale="1" resid="Icon.32"/>
+                    <bt:Image size="32" scale="2" resid="Icon.32"/>
+                    <bt:Image size="32" scale="3" resid="Icon.32"/>
+                    <bt:Image size="48" scale="1" resid="Icon.48"/>
+                    <bt:Image size="48" scale="2" resid="Icon.48"/>
+                    <bt:Image size="48" scale="3" resid="Icon.48"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </ExtensionPoint>
+          </MobileFormFactor>
+        </Host>
+      </Hosts>
+      <Resources>
+        <bt:Images>
+          <bt:Image id="Icon.16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
+          <bt:Image id="Icon.25" DefaultValue="https://localhost:3000/assets/icon-25.png"/>
+          <bt:Image id="Icon.32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+          <bt:Image id="Icon.48" DefaultValue="https://localhost:3000/assets/icon-48.png"/>
+          <bt:Image id="Icon.80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
+          <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="Group.Label" DefaultValue="EML Archive"/>
+          <bt:String id="Button.Label" DefaultValue="Als EML speichern"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="Button.Tooltip" DefaultValue="Speichert diese Nachricht als EML in OneDrive."/>
+        </bt:LongStrings>
+      </Resources>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>
