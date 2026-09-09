@@ -114,3 +114,28 @@ button:disabled { opacity: .5; cursor: default; }
 @media (max-width: 340px) {
   .picker-actions { grid-template-columns: 1fr; }
 }
+
+/* Hidden views must stay hidden even when their class uses flex/grid. */
+[hidden] { display: none !important; }
+html, body { height: 100%; overflow: hidden; }
+.app-shell {
+  height: 100%; height: 100dvh; min-height: 0;
+  padding: 14px 16px max(12px, env(safe-area-inset-bottom));
+  gap: 12px; overflow: hidden;
+}
+.header, .picker-header, .picker-path-row, .action-bar, .picker-actions { flex-shrink: 0; }
+.view-content { min-height: 0; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 2px 0 8px; }
+.message-subject { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.message-sender { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-input { font-size: 16px; min-height: 44px; }
+.action-bar { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid color-mix(in srgb, CanvasText 12%, transparent); padding-top: 12px; }
+#saveButton { margin-top: 0; }
+.folder-list { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.folder-row { flex-shrink: 0; grid-template-columns: 20px minmax(0, 1fr) 12px; }
+.folder-row span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.picker-actions { margin-top: 0; padding-top: 10px; border-top: 1px solid color-mix(in srgb, CanvasText 12%, transparent); }
+.new-folder-form { flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; padding: 12px; border-radius: 12px; background: color-mix(in srgb, CanvasText 5%, Canvas); max-height: 65%; overflow-y: auto; }
+.form-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.status { overflow-wrap: anywhere; max-height: 100px; overflow-y: auto; }
+button { min-height: 44px; }
+button:focus-visible { outline: 2px solid #0f6cbd; outline-offset: 2px; }

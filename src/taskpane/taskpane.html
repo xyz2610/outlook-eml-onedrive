@@ -17,6 +17,7 @@
       </div>
     </header>
 
+    <div class="view-content" id="mainContent">
     <section class="message-card">
       <div id="subject" class="message-subject"></div>
       <div id="sender" class="message-sender"></div>
@@ -37,8 +38,12 @@
       <div id="recentFolders" class="recent-list"></div>
     </section>
 
-    <div id="status" class="status" hidden></div>
-    <button id="saveButton" class="primary-button" type="button">Als EML speichern</button>
+    </div>
+    <footer class="action-bar">
+      <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+      <button id="saveButton" class="primary-button" type="button" disabled>Speichern &amp; schließen</button>
+      <button id="closeButton" class="secondary-button" type="button" hidden>Schließen</button>
+    </footer>
   </main>
 
   <main id="picker" class="app-shell picker" hidden>
@@ -53,11 +58,20 @@
       <div id="pickerPath" class="picker-path">OneDrive</div>
     </div>
 
-    <div id="folderList" class="folder-list"></div>
+    <form id="newFolderForm" class="new-folder-form" hidden>
+      <label for="newFolderName" class="field-label">Neuer Ordner</label>
+      <input id="newFolderName" class="text-input" placeholder="Ordnername" autocomplete="off" maxlength="100" required />
+      <div class="form-actions">
+        <button id="cancelNewFolderButton" class="secondary-button" type="button">Abbrechen</button>
+        <button id="createFolderButton" class="primary-button" type="submit">Erstellen</button>
+      </div>
+      <div id="folderError" class="status" data-kind="error" role="alert" hidden></div>
+    </form>
+    <div id="folderList" class="folder-list" aria-live="polite"></div>
 
     <div class="picker-actions">
       <button id="newFolderButton" class="secondary-button" type="button">Neuer Ordner</button>
-      <button id="selectFolderButton" class="primary-button" type="button">Diesen Ordner wählen</button>
+      <button id="selectFolderButton" class="primary-button" type="button">Hier speichern</button>
     </div>
   </main>
 </body>

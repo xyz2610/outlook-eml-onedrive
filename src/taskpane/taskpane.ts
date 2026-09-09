@@ -9,6 +9,11 @@ let rootFolder: DriveFolder;
 let selectedFolder: DriveFolder;
 let browseFolder: DriveFolder;
 let browseStack: DriveFolder[] = [];
+let busy = false;
+let ready = false;
+let savedSuccessfully = false;
+let folderRequest = 0;
+let creatingFolder = false;
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -19,10 +24,21 @@ function setStatus(text: string, kind: "info" | "success" | "error" = "info") {
   el.hidden = !text;
 }
 
-function setBusy(busy: boolean) {
-  $("saveButton").toggleAttribute("disabled", busy);
-  $("chooseFolderButton").toggleAttribute("disabled", busy);
+function setBusy(value: boolean) {
+  busy = value;
+  for (const id of ["saveButton", "chooseFolderButton", "selectFolderButton", "newFolderButton", "upButton", "cancelPickerButton"]) {
+    $(id).toggleAttribute("disabled", busy || !ready || savedSuccessfully);
+  }
+  if (rootFolder && browseFolder) $("upButton").toggleAttribute("disabled", busy || browseFolder.id === rootFolder.id);
   document.body.dataset.busy = busy ? "true" : "false";
+}
+
+function closeAddin() {
+  try {
+    if (typeof Office.context.ui.closeContainer === "function") {
+      Office.context.ui.closeContainer();
+    }
+  } catch { /* Preserve the successful save even if this host cannot close. */ }
 }
 
 function renderMessage() {
@@ -47,6 +63,7 @@ function renderRecents() {
     button.type = "button";
     button.textContent = folder.path === "/" ? "OneDrive" : `OneDrive${folder.path}`;
     button.onclick = () => {
+      if (busy || savedSuccessfully) return;
       selectedFolder = folder;
       renderSelectedFolder();
     };
@@ -55,26 +72,35 @@ function renderRecents() {
 }
 
 async function openFolderPicker() {
+  if (busy || !ready) return;
   browseFolder = selectedFolder || rootFolder;
   browseStack = browseFolder.id === rootFolder.id ? [] : [rootFolder];
   $("picker").hidden = false;
   $("mainView").hidden = true;
+  $("newFolderForm").hidden = true;
+  window.scrollTo(0, 0);
   await renderFolderBrowser();
 }
 
 function closeFolderPicker() {
   $("picker").hidden = true;
   $("mainView").hidden = false;
+  $("mainContent").scrollTop = 0;
+  window.scrollTo(0, 0);
 }
 
 async function renderFolderBrowser() {
+  const request = ++folderRequest;
+  const parent = browseFolder;
   $("pickerPath").textContent = browseFolder.path === "/" ? "OneDrive" : `OneDrive${browseFolder.path}`;
   $("upButton").toggleAttribute("disabled", browseFolder.id === rootFolder.id);
   const list = $("folderList");
+  list.scrollTop = 0;
   list.innerHTML = '<div class="loading">Ordner werden geladen …</div>';
 
   try {
-    const folders = await listFolders(browseFolder);
+    const folders = await listFolders(parent);
+    if (request !== folderRequest) return;
     list.innerHTML = "";
     if (!folders.length) {
       list.innerHTML = '<div class="empty">Dieser Ordner enthält keine Unterordner.</div>';
@@ -87,6 +113,7 @@ async function renderFolderBrowser() {
       row.className = "folder-row";
       row.innerHTML = `<span class="folder-icon">▱</span><span>${escapeHtml(folder.name)}</span><span class="chevron">›</span>`;
       row.onclick = async () => {
+        if (busy || creatingFolder) return;
         browseStack.push(browseFolder);
         browseFolder = folder;
         await renderFolderBrowser();
@@ -94,6 +121,7 @@ async function renderFolderBrowser() {
       list.appendChild(row);
     }
   } catch (error) {
+    if (request !== folderRequest) return;
     list.innerHTML = `<div class="error-box">${escapeHtml(errorMessage(error))}</div>`;
   }
 }
@@ -107,6 +135,7 @@ function errorMessage(error: unknown): string {
 }
 
 async function saveMessage() {
+  if (busy || !ready || savedSuccessfully) return;
   setBusy(true);
   setStatus("Nachricht wird als EML abgerufen …");
 
@@ -118,11 +147,15 @@ async function saveMessage() {
     const mime = await getMessageMime(message.graphId);
     setStatus("EML wird nach OneDrive hochgeladen …");
     const saved = await uploadEml(selectedFolder, filename, mime);
-    await rememberFolder(selectedFolder).catch(() => undefined);
+    savedSuccessfully = true;
+    await Promise.race([rememberFolder(selectedFolder).catch(() => undefined), new Promise<void>(resolve => setTimeout(resolve, 1200))]);
     renderRecents();
 
     const savedPath = selectedFolder.path === "/" ? `OneDrive/${saved.name}` : `OneDrive${selectedFolder.path}/${saved.name}`;
     setStatus(`Gespeichert: ${savedPath}`, "success");
+    $("saveButton").hidden = true;
+    $("closeButton").hidden = false;
+    setTimeout(closeAddin, 650);
   } catch (error) {
     setStatus(errorMessage(error), "error");
   } finally {
@@ -130,17 +163,41 @@ async function saveMessage() {
   }
 }
 
-async function createNewFolder() {
-  const name = window.prompt("Name des neuen OneDrive-Ordners:");
-  if (!name?.trim()) return;
+function showNewFolderForm() {
+  if (busy || creatingFolder) return;
+  $("newFolderForm").hidden = false;
+  $("folderError").hidden = true;
+  ($("newFolderName") as HTMLInputElement).value = "";
+  ($("newFolderName") as HTMLInputElement).focus();
+}
 
+async function createNewFolder(event: Event) {
+  event.preventDefault();
+  if (creatingFolder || busy) return;
+  const input = $("newFolderName") as HTMLInputElement;
+  const name = input.value.trim();
+  if (!name) { input.focus(); return; }
+  creatingFolder = true;
+  const parent = browseFolder;
+  $("folderError").hidden = true;
+  for (const id of ["createFolderButton", "cancelNewFolderButton", "cancelPickerButton", "selectFolderButton", "upButton", "newFolderButton", "newFolderName"]) $(id).toggleAttribute("disabled", true);
+  $("createFolderButton").textContent = "Wird erstellt …";
   try {
-    const created = await createFolder(browseFolder, name.trim());
-    browseStack.push(browseFolder);
+    const created = await createFolder(parent, name);
+    browseStack.push(parent);
     browseFolder = created;
+    $("newFolderForm").hidden = true;
+    input.blur();
     await renderFolderBrowser();
+    $("selectFolderButton").focus();
   } catch (error) {
-    window.alert(errorMessage(error));
+    $("folderError").textContent = errorMessage(error);
+    $("folderError").hidden = false;
+  } finally {
+    creatingFolder = false;
+    for (const id of ["createFolderButton", "cancelNewFolderButton", "newFolderName"]) $(id).removeAttribute("disabled");
+    $("createFolderButton").textContent = "Erstellen";
+    setBusy(false);
   }
 }
 
@@ -151,6 +208,7 @@ async function initialize() {
     renderMessage();
     await initializeAuth();
     rootFolder = await getOneDriveRoot();
+    ready = true;
     selectedFolder = getRecentFolders()[0] || rootFolder;
     renderSelectedFolder();
     renderRecents();
@@ -162,8 +220,12 @@ async function initialize() {
       selectedFolder = browseFolder;
       renderSelectedFolder();
       closeFolderPicker();
+      void saveMessage();
     };
-    $("newFolderButton").onclick = createNewFolder;
+    $("newFolderButton").onclick = showNewFolderForm;
+    $("newFolderForm").onsubmit = createNewFolder;
+    $("cancelNewFolderButton").onclick = () => { $("newFolderForm").hidden = true; $("newFolderButton").focus(); };
+    $("closeButton").onclick = closeAddin;
     $("upButton").onclick = async () => {
       const previous = browseStack.pop();
       if (previous) {
