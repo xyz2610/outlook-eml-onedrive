@@ -5,11 +5,23 @@
            xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
   <Id>8f43e02b-e9fb-4ce6-bcf8-287dfe133d4c</Id>
-  <Version>1.0.0.0</Version>
+  <Version>1.1.0.0</Version>
   <ProviderName>Internal</ProviderName>
-  <DefaultLocale>de-DE</DefaultLocale>
-  <DisplayName DefaultValue="EML Archive"/>
-  <Description DefaultValue="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Save as EML">
+    <Override Locale="de-DE" Value="Als EML speichern"/>
+    <Override Locale="de-AT" Value="Als EML speichern"/>
+    <Override Locale="de-CH" Value="Als EML speichern"/>
+    <Override Locale="de-LI" Value="Als EML speichern"/>
+    <Override Locale="de-LU" Value="Als EML speichern"/>
+  </DisplayName>
+  <Description DefaultValue="Save the open Outlook email as an EML file in a OneDrive folder of your choice.">
+    <Override Locale="de-DE" Value="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
+    <Override Locale="de-AT" Value="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
+    <Override Locale="de-CH" Value="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
+    <Override Locale="de-LI" Value="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
+    <Override Locale="de-LU" Value="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
+  </Description>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png"/>
   <SupportUrl DefaultValue="https://localhost:3000/support.html"/>
@@ -84,11 +96,29 @@
         <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="Group.Label" DefaultValue="EML Archive"/>
-        <bt:String id="Button.Label" DefaultValue="Als EML speichern"/>
+        <bt:String id="Group.Label" DefaultValue="Save as EML">
+          <bt:Override Locale="de-DE" Value="Als EML speichern"/>
+          <bt:Override Locale="de-AT" Value="Als EML speichern"/>
+          <bt:Override Locale="de-CH" Value="Als EML speichern"/>
+          <bt:Override Locale="de-LI" Value="Als EML speichern"/>
+          <bt:Override Locale="de-LU" Value="Als EML speichern"/>
+        </bt:String>
+        <bt:String id="Button.Label" DefaultValue="Save as EML">
+          <bt:Override Locale="de-DE" Value="Als EML speichern"/>
+          <bt:Override Locale="de-AT" Value="Als EML speichern"/>
+          <bt:Override Locale="de-CH" Value="Als EML speichern"/>
+          <bt:Override Locale="de-LI" Value="Als EML speichern"/>
+          <bt:Override Locale="de-LU" Value="Als EML speichern"/>
+        </bt:String>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="Button.Tooltip" DefaultValue="Speichert diese Nachricht als EML in OneDrive."/>
+        <bt:String id="Button.Tooltip" DefaultValue="Save this email as an EML file in OneDrive.">
+          <bt:Override Locale="de-DE" Value="Speichert diese Nachricht als EML in OneDrive."/>
+          <bt:Override Locale="de-AT" Value="Speichert diese Nachricht als EML in OneDrive."/>
+          <bt:Override Locale="de-CH" Value="Speichert diese Nachricht als EML in OneDrive."/>
+          <bt:Override Locale="de-LI" Value="Speichert diese Nachricht als EML in OneDrive."/>
+          <bt:Override Locale="de-LU" Value="Speichert diese Nachricht als EML in OneDrive."/>
+        </bt:String>
       </bt:LongStrings>
     </Resources>
 
@@ -167,11 +197,29 @@
           <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
         </bt:Urls>
         <bt:ShortStrings>
-          <bt:String id="Group.Label" DefaultValue="EML Archive"/>
-          <bt:String id="Button.Label" DefaultValue="Als EML speichern"/>
+          <bt:String id="Group.Label" DefaultValue="Save as EML">
+            <bt:Override Locale="de-DE" Value="Als EML speichern"/>
+            <bt:Override Locale="de-AT" Value="Als EML speichern"/>
+            <bt:Override Locale="de-CH" Value="Als EML speichern"/>
+            <bt:Override Locale="de-LI" Value="Als EML speichern"/>
+            <bt:Override Locale="de-LU" Value="Als EML speichern"/>
+          </bt:String>
+          <bt:String id="Button.Label" DefaultValue="Save as EML">
+            <bt:Override Locale="de-DE" Value="Als EML speichern"/>
+            <bt:Override Locale="de-AT" Value="Als EML speichern"/>
+            <bt:Override Locale="de-CH" Value="Als EML speichern"/>
+            <bt:Override Locale="de-LI" Value="Als EML speichern"/>
+            <bt:Override Locale="de-LU" Value="Als EML speichern"/>
+          </bt:String>
         </bt:ShortStrings>
         <bt:LongStrings>
-          <bt:String id="Button.Tooltip" DefaultValue="Speichert diese Nachricht als EML in OneDrive."/>
+          <bt:String id="Button.Tooltip" DefaultValue="Save this email as an EML file in OneDrive.">
+            <bt:Override Locale="de-DE" Value="Speichert diese Nachricht als EML in OneDrive."/>
+            <bt:Override Locale="de-AT" Value="Speichert diese Nachricht als EML in OneDrive."/>
+            <bt:Override Locale="de-CH" Value="Speichert diese Nachricht als EML in OneDrive."/>
+            <bt:Override Locale="de-LI" Value="Speichert diese Nachricht als EML in OneDrive."/>
+            <bt:Override Locale="de-LU" Value="Speichert diese Nachricht als EML in OneDrive."/>
+          </bt:String>
         </bt:LongStrings>
       </Resources>
     </VersionOverrides>

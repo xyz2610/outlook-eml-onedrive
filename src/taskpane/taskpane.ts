@@ -1,3 +1,4 @@
+import { initializeLanguage, t } from "./i18n";
 /* global Office */
 import { initializeAuth } from "./auth";
 import { createFolder, getMessageMime, getOneDriveRoot, listFolders, uploadEml, type DriveFolder } from "./graph";
@@ -96,14 +97,14 @@ async function renderFolderBrowser() {
   $("upButton").toggleAttribute("disabled", browseFolder.id === rootFolder.id);
   const list = $("folderList");
   list.scrollTop = 0;
-  list.innerHTML = '<div class="loading">Ordner werden geladen …</div>';
+  list.innerHTML = `<div class="loading">${escapeHtml(t("loadingFolders"))}</div>`;
 
   try {
     const folders = await listFolders(parent);
     if (request !== folderRequest) return;
     list.innerHTML = "";
     if (!folders.length) {
-      list.innerHTML = '<div class="empty">Dieser Ordner enthält keine Unterordner.</div>';
+      list.innerHTML = `<div class="empty">${escapeHtml(t("emptyFolder"))}</div>`;
       return;
     }
 
@@ -131,13 +132,13 @@ function escapeHtml(value: string): string {
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
+  return error instanceof Error ? error.message : t("requestFailed");
 }
 
 async function saveMessage() {
   if (busy || !ready || savedSuccessfully) return;
   setBusy(true);
-  setStatus("Nachricht wird als EML abgerufen …");
+  setStatus(t("readingMessage"));
 
   try {
     const filenameInput = $("filename") as HTMLInputElement;
@@ -145,14 +146,14 @@ async function saveMessage() {
     filenameInput.value = filename;
 
     const mime = await getMessageMime(message.graphId);
-    setStatus("EML wird nach OneDrive hochgeladen …");
+    setStatus(t("uploading"));
     const saved = await uploadEml(selectedFolder, filename, mime);
     savedSuccessfully = true;
     await Promise.race([rememberFolder(selectedFolder).catch(() => undefined), new Promise<void>(resolve => setTimeout(resolve, 1200))]);
     renderRecents();
 
     const savedPath = selectedFolder.path === "/" ? `OneDrive/${saved.name}` : `OneDrive${selectedFolder.path}/${saved.name}`;
-    setStatus(`Gespeichert: ${savedPath}`, "success");
+    setStatus(t("saved", { path: savedPath }), "success");
     $("saveButton").hidden = true;
     $("closeButton").hidden = false;
     setTimeout(closeAddin, 650);
@@ -181,7 +182,7 @@ async function createNewFolder(event: Event) {
   const parent = browseFolder;
   $("folderError").hidden = true;
   for (const id of ["createFolderButton", "cancelNewFolderButton", "cancelPickerButton", "selectFolderButton", "upButton", "newFolderButton", "newFolderName"]) $(id).toggleAttribute("disabled", true);
-  $("createFolderButton").textContent = "Wird erstellt …";
+  $("createFolderButton").textContent = t("creating");
   try {
     const created = await createFolder(parent, name);
     browseStack.push(parent);
@@ -196,7 +197,7 @@ async function createNewFolder(event: Event) {
   } finally {
     creatingFolder = false;
     for (const id of ["createFolderButton", "cancelNewFolderButton", "newFolderName"]) $(id).removeAttribute("disabled");
-    $("createFolderButton").textContent = "Erstellen";
+    $("createFolderButton").textContent = t("create");
     setBusy(false);
   }
 }
@@ -243,4 +244,7 @@ async function initialize() {
   }
 }
 
-Office.onReady(() => initialize());
+Office.onReady(() => {
+  initializeLanguage(Office.context.displayLanguage, navigator.language);
+  return initialize();
+});

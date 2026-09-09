@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 import {
   createNestablePublicClientApplication,
   InteractionRequiredAuthError,
@@ -10,7 +11,7 @@ let client: IPublicClientApplication | undefined;
 
 function getMsalConfig() {
   if (!CLIENT_ID || CLIENT_ID.startsWith("YOUR-")) {
-    throw new Error("Bitte zuerst CLIENT_ID in src/taskpane/config.ts setzen.");
+    throw new Error(t("missingClient"));
   }
 
   return {
@@ -34,7 +35,7 @@ export async function initializeAuth(): Promise<void> {
 
 export async function getAccessToken(scopes: string[]): Promise<string> {
   await initializeAuth();
-  if (!client) throw new Error("Authentifizierung konnte nicht initialisiert werden.");
+  if (!client) throw new Error(t("authInitFailed"));
 
   const active = client.getActiveAccount() || client.getAllAccounts()[0];
   if (active && !client.getActiveAccount()) client.setActiveAccount(active);
@@ -43,7 +44,7 @@ export async function getAccessToken(scopes: string[]): Promise<string> {
     const silent = await client.acquireTokenSilent({ scopes, ...(active ? { account: active } : {}) });
     return silent.accessToken;
   } catch (error) {
-    if (!(error instanceof InteractionRequiredAuthError)) throw error;
+    if (!(error instanceof InteractionRequiredAuthError)) throw new Error(t("authFailed"));
   }
 
   let result: AuthenticationResult;
@@ -51,7 +52,7 @@ export async function getAccessToken(scopes: string[]): Promise<string> {
     result = await client.acquireTokenPopup({ scopes, ...(active ? { account: active } : {}) });
   } catch (error) {
     throw new Error(
-      `Microsoft-Anmeldung fehlgeschlagen. Prüfe NAA/Redirect-URI und die Graph-Berechtigungen. ${String(error)}`
+      t("authFailed")
     );
   }
 

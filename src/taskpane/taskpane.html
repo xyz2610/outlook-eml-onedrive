@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>EML Archive</title>
+  <title data-i18n="appName">Save as EML</title>
   <link rel="stylesheet" href="taskpane.css" />
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 </head>
@@ -13,7 +13,7 @@
     <header class="header">
       <div>
         <div class="eyebrow">OneDrive</div>
-        <h1>Mail als EML speichern</h1>
+        <h1 data-i18n="appName">Save as EML</h1>
       </div>
     </header>
 
@@ -23,10 +23,10 @@
       <div id="sender" class="message-sender"></div>
     </section>
 
-    <label class="field-label" for="filename">Dateiname</label>
+    <label class="field-label" for="filename" data-i18n="filename">File name</label>
     <input id="filename" class="text-input" type="text" autocomplete="off" />
 
-    <div class="field-label">Speicherort</div>
+    <div class="field-label" data-i18n="location">Save to</div>
     <button id="chooseFolderButton" class="folder-choice" type="button">
       <span class="folder-mark">▱</span>
       <span id="selectedFolderPath" class="folder-path">OneDrive</span>
@@ -34,44 +34,44 @@
     </button>
 
     <section id="recentSection" class="recent-section" hidden>
-      <div class="field-label">Zuletzt verwendet</div>
+      <div class="field-label" data-i18n="recent">Recent folders</div>
       <div id="recentFolders" class="recent-list"></div>
     </section>
 
     </div>
     <footer class="action-bar">
       <div id="status" class="status" role="status" aria-live="polite" hidden></div>
-      <button id="saveButton" class="primary-button" type="button" disabled>Speichern &amp; schließen</button>
-      <button id="closeButton" class="secondary-button" type="button" hidden>Schließen</button>
+      <button id="saveButton" class="primary-button" type="button" disabled data-i18n="saveClose">Save &amp; close</button>
+      <button id="closeButton" class="secondary-button" type="button" hidden data-i18n="close">Close</button>
     </footer>
   </main>
 
   <main id="picker" class="app-shell picker" hidden>
     <header class="picker-header">
-      <button id="cancelPickerButton" class="text-button" type="button">Abbrechen</button>
-      <strong>Ordner wählen</strong>
+      <button id="cancelPickerButton" class="text-button" type="button" data-i18n="cancel">Cancel</button>
+      <strong data-i18n="chooseFolder">Choose a folder</strong>
       <span class="header-spacer"></span>
     </header>
 
     <div class="picker-path-row">
-      <button id="upButton" class="icon-button" type="button" aria-label="Eine Ebene nach oben">‹</button>
+      <button id="upButton" class="icon-button" type="button" aria-label="Go up one level" data-i18n-label="up">‹</button>
       <div id="pickerPath" class="picker-path">OneDrive</div>
     </div>
 
     <form id="newFolderForm" class="new-folder-form" hidden>
-      <label for="newFolderName" class="field-label">Neuer Ordner</label>
-      <input id="newFolderName" class="text-input" placeholder="Ordnername" autocomplete="off" maxlength="100" required />
+      <label for="newFolderName" class="field-label" data-i18n="newFolder">New folder</label>
+      <input id="newFolderName" class="text-input" placeholder="Folder name" data-i18n-placeholder="folderName" autocomplete="off" maxlength="100" required />
       <div class="form-actions">
-        <button id="cancelNewFolderButton" class="secondary-button" type="button">Abbrechen</button>
-        <button id="createFolderButton" class="primary-button" type="submit">Erstellen</button>
+        <button id="cancelNewFolderButton" class="secondary-button" type="button" data-i18n="cancel">Cancel</button>
+        <button id="createFolderButton" class="primary-button" type="submit" data-i18n="create">Create</button>
       </div>
       <div id="folderError" class="status" data-kind="error" role="alert" hidden></div>
     </form>
     <div id="folderList" class="folder-list" aria-live="polite"></div>
 
     <div class="picker-actions">
-      <button id="newFolderButton" class="secondary-button" type="button">Neuer Ordner</button>
-      <button id="selectFolderButton" class="primary-button" type="button">Hier speichern</button>
+      <button id="newFolderButton" class="secondary-button" type="button" data-i18n="newFolder">New folder</button>
+      <button id="selectFolderButton" class="primary-button" type="button" data-i18n="saveHere">Save here</button>
     </div>
   </main>
 </body>

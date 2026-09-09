@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 /* global Office */
 import { MAX_RECENTS, RECENTS_KEY } from "./config";
 import type { DriveFolder } from "./graph";
@@ -13,7 +14,7 @@ export async function rememberFolder(folder: DriveFolder): Promise<void> {
   await new Promise<void>((resolve, reject) => {
     Office.context.roamingSettings.saveAsync((result) => {
       if (result.status === Office.AsyncResultStatus.Succeeded) resolve();
-      else reject(new Error(result.error?.message || "Einstellungen konnten nicht gespeichert werden."));
+      else reject(new Error(t("settingsFailed")));
     });
   });
 }

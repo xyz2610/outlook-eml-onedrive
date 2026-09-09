@@ -1,3 +1,4 @@
+import { t, type TranslationKey } from "./i18n";
 import { GRAPH_BASE, GRAPH_SCOPES } from "./config";
 import { getAccessToken } from "./auth";
 
@@ -21,10 +22,19 @@ async function graphFetch(path: string, init: RequestInit = {}): Promise<Respons
   headers.set("Authorization", `Bearer ${token}`);
 
   const url = path.startsWith("https://") ? path : `${GRAPH_BASE}${path}`;
-  const response = await fetch(url, { ...init, headers });
+  let response: Response;
+  try {
+    response = await fetch(url, { ...init, headers });
+  } catch {
+    throw new Error(t("networkFailed"));
+  }
   if (!response.ok) {
-    const detail = await response.text().catch(() => "");
-    throw new Error(`Graph ${response.status}: ${detail || response.statusText}`);
+    const messages: Record<number, TranslationKey> = {
+      400: "invalidRequest", 401: "sessionExpired", 403: "accessDenied",
+      404: "notFound", 409: "nameConflict", 429: "throttled",
+    };
+    const key = messages[response.status] || (response.status >= 500 ? "serviceUnavailable" : "requestFailed");
+    throw new Error(`${t(key)} (HTTP ${response.status})`);
   }
   return response;
 }

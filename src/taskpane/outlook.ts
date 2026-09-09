@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 /* global Office */
 
 export type CurrentMessage = {
@@ -10,7 +11,7 @@ export type CurrentMessage = {
 export function getGraphMessageId(): string {
   const item = Office.context.mailbox.item as Office.MessageRead;
   const itemId = item.itemId;
-  if (!itemId) throw new Error("Für die geöffnete Nachricht ist keine Item-ID verfügbar.");
+  if (!itemId) throw new Error(t("missingMessage"));
 
   const host = Office.context.mailbox.diagnostics.hostName;
   if (host === "OutlookIOS" || host === "OutlookAndroid") {
@@ -23,11 +24,11 @@ export function getGraphMessageId(): string {
 export function getCurrentMessage(): CurrentMessage {
   const item = Office.context.mailbox.item as Office.MessageRead;
   const from = item.from;
-  const sender = from?.displayName || from?.emailAddress || "Unbekannt";
+  const sender = from?.displayName || from?.emailAddress || t("unknownSender");
 
   return {
     graphId: getGraphMessageId(),
-    subject: item.subject || "Ohne Betreff",
+    subject: item.subject || t("noSubject"),
     sender,
     received: item.dateTimeCreated ? new Date(item.dateTimeCreated) : new Date(),
   };
@@ -50,5 +51,5 @@ export function sanitizeFilename(value: string): string {
     .trim();
 
   const withExtension = cleaned.toLowerCase().endsWith(".eml") ? cleaned : `${cleaned}.eml`;
-  return `${withExtension.slice(0, -4).slice(0, 176) || "Nachricht"}.eml`;
+  return `${withExtension.slice(0, -4).slice(0, 176) || t("fallbackFilename")}.eml`;
 }

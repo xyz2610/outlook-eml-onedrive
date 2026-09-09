@@ -1,6 +1,6 @@
 {
   "name": "outlook-eml-onedrive",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Outlook add-in to save the currently opened message as an EML file to a user-selected OneDrive folder.",
   "scripts": {

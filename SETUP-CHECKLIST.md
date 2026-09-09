@@ -1,10 +1,7 @@
-# Setup checklist
+# Version 1.1.0
 
-- [x] GitHub hosting paths and Entra identifiers configured.
-- [x] User confirmed delegated Mail.Read and Files.ReadWrite permissions.
-- [ ] Enable GitHub Pages with GitHub Actions as source.
-- [ ] Upload source including .github/workflows/deploy.yml.
-- [ ] Confirm successful GitHub build and deployment.
-- [ ] Install deployed manifest in Outlook on the web.
-- [ ] Approve user access or resolve tenant consent policy.
-- [ ] Test save, attachments, folder creation, repeated filename, and Outlook iOS.
+- [x] German and English UI and manifest labels.
+- [x] Local language and behavior tests.
+- [ ] Upload update to existing GitHub repository and confirm green workflow.
+- [ ] Update existing app manifest in Microsoft 365 admin center; preserve assigned users.
+- [ ] Reopen Outlook add-in and verify German/English display language.
