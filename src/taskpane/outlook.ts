@@ -50,5 +50,5 @@ export function sanitizeFilename(value: string): string {
     .trim();
 
   const withExtension = cleaned.toLowerCase().endsWith(".eml") ? cleaned : `${cleaned}.eml`;
-  return withExtension.slice(0, 180) || "Nachricht.eml";
+  return `${withExtension.slice(0, -4).slice(0, 176) || "Nachricht"}.eml`;
 }

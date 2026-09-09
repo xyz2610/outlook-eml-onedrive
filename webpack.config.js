@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const devOrigin = "https://localhost:3000";
-const prodOrigin = (process.env.ADDIN_PUBLIC_URL || "https://YOUR-ADDIN-HOST.example").replace(/\/$/, "");
+const prodOrigin = (process.env.ADDIN_PUBLIC_URL || "https://xyz2610.github.io/outlook-eml-onedrive").replace(/\/$/, "");
 
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
@@ -57,6 +57,7 @@ module.exports = async (env, options) => {
       new CopyWebpackPlugin({
         patterns: [
           { from: "assets", to: "assets" },
+          { from: "src/taskpane/index.html", to: "index.html" },
           { from: "src/taskpane/taskpane.css", to: "taskpane.css" },
           {
             from: "manifest.xml",
@@ -68,10 +69,10 @@ module.exports = async (env, options) => {
         ]
       })
     ],
-    devServer: {
+    devServer: dev ? {
       headers: { "Access-Control-Allow-Origin": "*" },
       server: { type: "https", options: await getHttpsOptions() },
       port: 3000
-    }
+    } : undefined
   };
 };
