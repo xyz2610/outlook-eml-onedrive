@@ -5,7 +5,7 @@
            xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xsi:type="MailApp">
   <Id>8f43e02b-e9fb-4ce6-bcf8-287dfe133d4c</Id>
-  <Version>1.1.0.0</Version>
+  <Version>1.2.0.0</Version>
   <ProviderName>Internal</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Save as EML">
@@ -22,8 +22,8 @@
     <Override Locale="de-LI" Value="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
     <Override Locale="de-LU" Value="Speichert die geöffnete Outlook-Nachricht als EML in einen auswählbaren OneDrive-Ordner."/>
   </Description>
-  <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png"/>
+  <IconUrl DefaultValue="https://localhost:3000/assets/icon-v120-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-v120-128.png"/>
   <SupportUrl DefaultValue="https://localhost:3000/support.html"/>
   <AppDomains>
     <AppDomain>https://localhost:3000</AppDomain>
@@ -87,9 +87,9 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
-        <bt:Image id="Icon.32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
-        <bt:Image id="Icon.80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+        <bt:Image id="Icon.16" DefaultValue="https://localhost:3000/assets/icon-v120-16.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://localhost:3000/assets/icon-v120-32.png"/>
+        <bt:Image id="Icon.80" DefaultValue="https://localhost:3000/assets/icon-v120-80.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
@@ -166,14 +166,14 @@
                   <Label resid="Button.Label"/>
                   <Icon xsi:type="bt:MobileIconList">
                     <bt:Image size="25" scale="1" resid="Icon.25"/>
-                    <bt:Image size="25" scale="2" resid="Icon.25"/>
-                    <bt:Image size="25" scale="3" resid="Icon.25"/>
+                    <bt:Image size="25" scale="2" resid="Icon.50"/>
+                    <bt:Image size="25" scale="3" resid="Icon.75"/>
                     <bt:Image size="32" scale="1" resid="Icon.32"/>
-                    <bt:Image size="32" scale="2" resid="Icon.32"/>
-                    <bt:Image size="32" scale="3" resid="Icon.32"/>
+                    <bt:Image size="32" scale="2" resid="Icon.64"/>
+                    <bt:Image size="32" scale="3" resid="Icon.96"/>
                     <bt:Image size="48" scale="1" resid="Icon.48"/>
-                    <bt:Image size="48" scale="2" resid="Icon.48"/>
-                    <bt:Image size="48" scale="3" resid="Icon.48"/>
+                    <bt:Image size="48" scale="2" resid="Icon.96"/>
+                    <bt:Image size="48" scale="3" resid="Icon.144"/>
                   </Icon>
                   <Action xsi:type="ShowTaskpane">
                     <SourceLocation resid="Taskpane.Url"/>
@@ -186,11 +186,16 @@
       </Hosts>
       <Resources>
         <bt:Images>
-          <bt:Image id="Icon.16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
-          <bt:Image id="Icon.25" DefaultValue="https://localhost:3000/assets/icon-25.png"/>
-          <bt:Image id="Icon.32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
-          <bt:Image id="Icon.48" DefaultValue="https://localhost:3000/assets/icon-48.png"/>
-          <bt:Image id="Icon.80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+          <bt:Image id="Icon.16" DefaultValue="https://localhost:3000/assets/icon-v120-16.png"/>
+          <bt:Image id="Icon.25" DefaultValue="https://localhost:3000/assets/icon-v120-25.png"/>
+          <bt:Image id="Icon.32" DefaultValue="https://localhost:3000/assets/icon-v120-32.png"/>
+          <bt:Image id="Icon.48" DefaultValue="https://localhost:3000/assets/icon-v120-48.png"/>
+          <bt:Image id="Icon.50" DefaultValue="https://localhost:3000/assets/icon-v120-50.png"/>
+          <bt:Image id="Icon.64" DefaultValue="https://localhost:3000/assets/icon-v120-64.png"/>
+          <bt:Image id="Icon.75" DefaultValue="https://localhost:3000/assets/icon-v120-75.png"/>
+          <bt:Image id="Icon.96" DefaultValue="https://localhost:3000/assets/icon-v120-96.png"/>
+          <bt:Image id="Icon.144" DefaultValue="https://localhost:3000/assets/icon-v120-144.png"/>
+          <bt:Image id="Icon.80" DefaultValue="https://localhost:3000/assets/icon-v120-80.png"/>
         </bt:Images>
         <bt:Urls>
           <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
