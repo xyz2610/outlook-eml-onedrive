@@ -1,10 +1,10 @@
-# Als EML speichern / Save as EML — 1.1.0
+# Als EML speichern / Save as EML — 1.2.1
 
 Outlook add-in to save the current email as an EML file in a selected OneDrive folder.
 
 The user interface follows Office.context.displayLanguage. German language variants use German; English and other languages use English. Browser language is used only when Outlook does not provide a display language. Email content, sender names, and existing folder names are preserved.
 
-Manifest version: 1.1.0.0. English defaults with German regional overrides for the app name, ribbon labels, and descriptions. Same add-in ID and delegated Graph permissions as before (Mail.Read, Files.ReadWrite).
+English defaults with German regional overrides for the app name, ribbon labels, and descriptions. Same add-in ID and delegated Graph permissions as before (Mail.Read, Files.ReadWrite).
 
 ## Deploy this update
 
