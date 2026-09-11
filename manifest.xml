@@ -6,7 +6,7 @@
            xsi:type="MailApp">
   <Id>8f43e02b-e9fb-4ce6-bcf8-287dfe133d4c</Id>
   <Version>1.2.0.0</Version>
-  <ProviderName>Internal</ProviderName>
+  <ProviderName>Krailinger</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Save as EML">
     <Override Locale="de-DE" Value="Als EML speichern"/>
